@@ -11,7 +11,13 @@ brew install bat
 brew install git
 brew install gpg
 brew install gpg-agent
+brew install fish
+brew install fzf
 brew install starship
+
+# Install Fonts
+brew install --cask font-jetbrains-mono-nerd-font
+brew install --cask font-jetbrains-mono
 
 # Install GO
 brew install go
