@@ -1,0 +1,42 @@
+[user]
+    name = Thiago Souza
+    email = thiagosouza.me@outlook.com
+
+[alias]
+    st = status
+    amend = commit --amend --no-edit
+    br = branch
+    ba = branch -a
+    co = checkout
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    ls = ls-files
+
+[color]
+    ui = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red
+    new = green
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[commit]
+    # https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification
+    gpgsign = true
+
+[pull]
+    ff = only
+
+[init]
+    defaultBranch = main
