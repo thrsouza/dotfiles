@@ -11,6 +11,7 @@ brew install bat
 brew install git
 brew install gpg
 brew install gpg-agent
+brew install starship
 
 # Install GO
 brew install go
