@@ -1,0 +1,9 @@
+{
+    "editor.fontSize": 14,
+    "terminal.integrated.fontSize": 14,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "window.commandCenter": true,
+    "symbols.hidesExplorerArrows": false,
+    "workbench.iconTheme": "symbols"
+}
