@@ -31,3 +31,6 @@ brew update;
 brew upgrade;
 brew upgrade --cask;
 brew cleanup --prune=all
+
+# Install Cursor CLI
+curl https://cursor.com/install -fsS | bash

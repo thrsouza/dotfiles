@@ -59,7 +59,7 @@ The following screenshots demonstrate the iTerm2 appearance settings:
 *General appearance configuration including colors, fonts, and basic settings*
 
 ### Window Settings
-![Window Settings](../assets/iterm2-appearence-02-winows.png)
+![Window Settings](../assets/iterm2-appearence-02-windows.png)
 *Window configuration including transparency, blur, and window behavior*
 
 ### Tab Configuration

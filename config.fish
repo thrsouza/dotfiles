@@ -9,6 +9,17 @@ set SPACESHIP_PROMPT_ADD_NEWLINE false
 starship init fish | source
 
 # ------------------------------------------------------------
+# Paths
+# ------------------------------------------------------------
+
+# Go
+set -x GOPATH $HOME/go
+fish_add_path $GOPATH/bin
+
+# Local
+fish_add_path $HOME/.local/bin
+
+# ------------------------------------------------------------
 # Aliases
 # ------------------------------------------------------------
 

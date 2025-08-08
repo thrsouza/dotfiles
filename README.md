@@ -27,7 +27,7 @@ This repository contains my personal configuration files for:
 - `assets/iterm2-appearence-*.png` - iTerm2 appearance screenshots
 
 ### Package Management
-- `brew.sh` - Homebrew packages installation script
+- `setup.sh` - Homebrew packages installation script (also installs Cursor CLI)
 
 ### Templates
 - `gitignore/` - Git ignore templates for different languages
@@ -49,9 +49,9 @@ This repository contains my personal configuration files for:
    cd dotfiles
    ```
 
-2. Install Homebrew packages:
+2. Run setup script (Homebrew + tools):
    ```bash
-   ./brew.sh
+   ./setup.sh
    ```
 
 3. Follow the specific configuration guides:
