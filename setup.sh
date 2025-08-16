@@ -22,6 +22,9 @@ brew install --cask font-jetbrains-mono
 # Install GO
 brew install go
 
+# Install Rustup
+brew install rustup
+
 # Install Clojure and Leiningen
 brew install clojure
 brew install leiningen
@@ -34,3 +37,6 @@ brew cleanup --prune=all
 
 # Install Cursor CLI
 curl https://cursor.com/install -fsS | bash
+
+# Install Rust
+rustup default stable

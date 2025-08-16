@@ -16,6 +16,9 @@ starship init fish | source
 set -x GOPATH $HOME/go
 fish_add_path $GOPATH/bin
 
+# Cargo / Rust
+fish_add_path $(brew --prefix rustup)/bin
+
 # Local
 fish_add_path $HOME/.local/bin
 
