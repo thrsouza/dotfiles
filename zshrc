@@ -18,14 +18,10 @@ gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"
 
-# Rust
-export PATH="$(brew --prefix rustup)/bin:$PATH"
-
-# Cargo
-export PATH="$HOME/.cargo/bin:$PATH"
-
-# Local
-export PATH="$HOME/.local/bin:$PATH"
+# Java
+export JAVA_HOME=$(/usr/libexec/java_home) # export JAVA_HOME=$(/usr/libexec/java_home -v 25)
+export PATH=$JAVA_HOME/bin:$PATH
+export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 
 # ------------------------------------------------------------
 # Aliases
@@ -38,14 +34,4 @@ alias gc='git commit -m'
 alias gb='git branch'
 alias gl='git log --oneline --graph --decorate'
 
-alias borabora="brew update; brew upgrade; brew upgrade --cask; brew cleanup --prune=all"
-
-# ------------------------------------------------------------
-# Fzf
-# ------------------------------------------------------------
-
-eval "$(fzf --zsh)"
-
-export FZF_DEFAULT_OPTS="
-  --style full
-  --preview 'bat --color=always {}'"
+alias bora="brew update; brew upgrade; brew upgrade --cask; brew cleanup --prune=all"
