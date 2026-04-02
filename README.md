@@ -1,115 +1,53 @@
-# Dotfiles
+# dotfiles
 
-Personal dotfiles and configuration files for macOS development environment.
+Personal macOS development environment configuration by [Thiago Souza](https://github.com/thrsouza).
 
-## Overview
+## What's included
 
-This repository contains my personal configuration files for:
-- Shell configuration (zsh)
-- Git configuration
-- Cursor editor settings
-- iTerm2 terminal configuration
-- Homebrew packages
-- GPG key configuration
+| File/Directory | Purpose |
+|---|---|
+| `zshrc` | Zsh config — GPG agent, Go/Java paths, aliases |
+| `gitconfig` | Git globals — GPG signing, colors, pull fast-forward |
+| `setup.sh` | Homebrew bootstrap + Claude Code installer |
+| `claude/` | Claude Code settings and custom statusline script |
+| `iterm2/thrsouza.json` | iTerm2 profile — JetBrains Mono, transparency/blur |
+| `gitignore/` | Language-specific `.gitignore` templates |
+| `docs/` | Setup guides for GPG and iTerm2 |
 
-## Files and Directories
+## Setup
 
-### Core Configuration
-- `zshrc` - Zsh shell configuration
-- `gitconfig` - Git global configuration
-- `config.fish` - Fish shell configuration (alternative)
+### 1. Install packages
 
-### Editor Settings
-- `cursor/settings.json` - Cursor editor settings
-
-### Terminal Configuration
-- `iterm2/thrsouza.json` - iTerm2 profile configuration
-- `assets/iterm2-appearence-*.png` - iTerm2 appearance screenshots
-
-### Package Management
-- `setup.sh` - Homebrew packages installation script (also installs Cursor CLI)
-
-### Templates
-- `gitignore/` - Git ignore templates for different languages
-  - `clojure.gitignore` - Clojure-specific gitignore
-  - `go.gitignore` - Go-specific gitignore
-
-## Documentation
-
-- [GPG.md](docs/GPG.md) - GPG key setup and configuration guide
-- [iTerm2.md](docs/iTerm2.md) - iTerm2 terminal configuration guide
-
-## Installation
-
-### Quick Setup
-
-1. Clone this repository:
-   ```bash
-   git clone <repository-url>
-   cd dotfiles
-   ```
-
-2. Run setup script (Homebrew + tools):
-   ```bash
-   ./setup.sh
-   ```
-
-3. Follow the specific configuration guides:
-   - [GPG Setup](docs/GPG.md) - For GPG key configuration
-   - [iTerm2 Setup](docs/iTerm2.md) - For terminal configuration
-
-### Manual Configuration
-
-#### Shell Configuration
 ```bash
-# Link zsh configuration
-ln -sf ~/path/to/dotfiles/zshrc ~/.zshrc
-
-# Or for fish shell
-ln -sf ~/path/to/dotfiles/config.fish ~/.config/fish/config.fish
+./setup.sh
 ```
 
-#### Git Configuration
+Installs: `git`, `gh`, `gpg`, `go`, `openjdk`, `maven`, `uv`, iTerm2, JetBrains Mono fonts, and Claude Code.
+
+### 2. Symlink configs
+
 ```bash
-# Link git configuration
+ln -sf ~/path/to/dotfiles/zshrc ~/.zshrc
 ln -sf ~/path/to/dotfiles/gitconfig ~/.gitconfig
 ```
 
-#### iTerm2 Configuration
-1. Open iTerm2
-2. Go to Preferences → Profiles
-3. Import the `iterm2/thrsouza.json` profile
-4. Set as default (optional)
+### 3. Claude Code
 
-## Features
+```bash
+cp claude/settings.json ~/.claude/settings.json
+cp claude/statusline-command.sh ~/.claude/statusline-command.sh
+```
 
-### Terminal (iTerm2)
-- Custom color scheme with light/dark mode support
-- JetBrains Mono font with ligatures
-- Transparency and blur effects
-- Optimized for development workflow
+The statusline displays current directory, git branch, active model, context window usage, and estimated session cost.
 
-### Shell (Zsh)
-- Enhanced prompt with git integration
-- Aliases for common commands
-- Environment variables setup
-- Plugin management
+### 4. GPG signing
 
-### Git
-- Global configuration
-- User information setup
-- Common aliases and shortcuts
-- Editor integration
+Commits are signed by default. Follow [docs/GPG.md](docs/GPG.md) to generate a key, then update the `signingkey` in `gitconfig`.
 
-### Editor (Cursor)
-- Optimized settings for development
-- Theme and appearance configuration
-- Extension recommendations
+### 5. iTerm2
 
-## Contributing
-
-Feel free to fork this repository and adapt it to your needs. The configurations are designed to be modular, so you can pick and choose what works for you.
+Import `iterm2/thrsouza.json` via **Preferences → Profiles → Other Actions → Import JSON Profiles**. See [docs/iTerm2.md](docs/iTerm2.md) for details.
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
+[MIT](LICENSE)

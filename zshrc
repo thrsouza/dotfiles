@@ -14,14 +14,23 @@ gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 # Paths
 # ------------------------------------------------------------
 
+# Claude Code
+export PATH="$HOME/.local/bin:$PATH"
+
 # Go
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"
 
 # Java
-export JAVA_HOME=$(/usr/libexec/java_home) # export JAVA_HOME=$(/usr/libexec/java_home -v 25)
+export JAVA_HOME=$(/usr/libexec/java_home) # export JAVA_HOME=$(/usr/libexec/java_home -v XX)
 export PATH=$JAVA_HOME/bin:$PATH
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
+
+# Homebrew
+export HOMEBREW_NO_INSTALL_CLEANUP=1
+
+# Antigravity
+export PATH="/Users/thrsouza/.antigravity/antigravity/bin:$PATH"
 
 # ------------------------------------------------------------
 # Aliases

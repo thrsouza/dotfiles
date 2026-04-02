@@ -8,16 +8,6 @@
     email = thiagosouza.me@outlook.com
     signingkey = 0000000000000000
 
-[alias]
-    st = status
-    amend = commit --amend --no-edit
-    br = branch
-    ba = branch -a
-    co = checkout
-    lol = log --graph --decorate --pretty=oneline --abbrev-commit
-    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
-    ls = ls-files
-
 [color]
     ui = auto
 
