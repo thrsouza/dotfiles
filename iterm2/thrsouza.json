@@ -21,11 +21,11 @@
     "Green Component" : 0.54621781805157665
   },
   "Bold Color" : {
-    "Red Component" : 0.062745101749897003,
+    "Red Component" : 0.062745101749896975,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.062745101749897003,
+    "Blue Component" : 0.062745101749896975,
     "Alpha Component" : 1,
-    "Green Component" : 0.062745101749897003
+    "Green Component" : 0.062745101749896975
   },
   "Ansi 1 Color (Dark)" : {
     "Red Component" : 0.82587681678235536,
@@ -56,7 +56,7 @@
     "Alpha Component" : 1,
     "Green Component" : 0.97999999999999998
   },
-  "Columns" : 128,
+  "Columns" : 144,
   "Ansi 8 Color" : {
     "Red Component" : 0.40781760215759277,
     "Color Space" : "sRGB",
@@ -118,7 +118,7 @@
     "Color Space" : "sRGB",
     "Blue Component" : 0.11764705926179886,
     "Alpha Component" : 1,
-    "Green Component" : 0.098039217293262482
+    "Green Component" : 0.098039217293262454
   },
   "Match Background Color (Dark)" : {
     "Red Component" : 1,
@@ -149,7 +149,7 @@
     "Green Component" : 0
   },
   "Silence Bell" : false,
-  "Rows" : 32,
+  "Rows" : 40,
   "Guid" : "C7982113-5156-45CD-9DA0-B42007619167",
   "Ansi 14 Color (Dark)" : {
     "Red Component" : 0.58823529411764708,
@@ -258,11 +258,11 @@
   },
   "Custom Command" : "No",
   "Background Color (Dark)" : {
-    "Red Component" : 0.078431372549019607,
+    "Red Component" : 0.078431372549019593,
     "Color Space" : "P3",
-    "Blue Component" : 0.078431372549019607,
+    "Blue Component" : 0.078431372549019593,
     "Alpha Component" : 1,
-    "Green Component" : 0.078431372549019607
+    "Green Component" : 0.078431372549019593
   },
   "Ansi 9 Color" : {
     "Red Component" : 0.8659515380859375,
@@ -317,11 +317,11 @@
     "Green Component" : 0.9042816162109375
   },
   "Foreground Color" : {
-    "Red Component" : 0.062745101749897003,
+    "Red Component" : 0.062745101749896975,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.062745101749897003,
+    "Blue Component" : 0.062745101749896975,
     "Alpha Component" : 1,
-    "Green Component" : 0.062745101749897003
+    "Green Component" : 0.062745101749896975
   },
   "Link Color (Light)" : {
     "Red Component" : 0.1001608745098114,
@@ -347,7 +347,7 @@
     "Green Component" : 0.23660069704055786
   },
   "Name" : "thrsouza",
-  "Transparency" : 0.080000000000000002,
+  "Transparency" : 0.040000000000000001,
   "Horizontal Spacing" : 1,
   "Cursor Color (Dark)" : {
     "Red Component" : 0.96882117834091197,
@@ -482,7 +482,8 @@
   "Tags" : [
 
   ],
-  "Blur Radius" : 4.4675669642857159,
+  "Blur Radius" : 24.467566964285716,
+  "Set Local Environment Vars" : 2,
   "Ansi 6 Color (Light)" : {
     "Red Component" : 0.39183392699360853,
     "Color Space" : "sRGB",
@@ -498,6 +499,7 @@
     "Green Component" : 0.99980000000000002
   },
   "Background Image Location" : "",
+  "Custom Locale" : "en_US.UTF-8",
   "Ansi 1 Color (Light)" : {
     "Red Component" : 0.82587681678235536,
     "Color Space" : "sRGB",
@@ -520,7 +522,7 @@
     "Alpha Component" : 1,
     "Green Component" : 0.7607843279838562
   },
-  "Normal Font" : "JetBrainsMonoNFM-Regular 15",
+  "Normal Font" : "JetBrainsMono-Regular 15",
   "Unlimited Scrollback" : true,
   "Ansi 12 Color (Light)" : {
     "Red Component" : 0.41730499529242515,
