@@ -1,99 +1,151 @@
 #!/usr/bin/env bash
-# Claude Code statusLine command
-# Line 1: ~/path/to/dir  git branch
-# Line 2: model  context progress bar  cost
 
 input=$(cat)
 
-# --- Directory ---
-cwd=$(echo "$input" | jq -r '.cwd // .workspace.current_dir // empty')
-home="$HOME"
-tilde='~'
-if [ -n "$home" ] && [ -n "$cwd" ]; then
-  dir="${cwd/#$home/$tilde}"
-else
-  dir="${cwd:-~}"
-fi
-dir_part="📂 \033[36m${dir}\033[0m"
+# --- Core fields ---
+cwd=$(echo "$input"        | jq -r '.workspace.current_dir // .cwd // empty')
+model=$(echo "$input"      | jq -r '.model.display_name // empty')
+version=$(echo "$input"    | jq -r '.version // empty')
+session=$(echo "$input"    | jq -r '.session_name // empty')
 
-# --- Git branch ---
-branch=$(git -C "$cwd" --no-optional-locks symbolic-ref --short HEAD 2>/dev/null \
-         || git -C "$cwd" --no-optional-locks rev-parse --short HEAD 2>/dev/null)
-if [ -n "$branch" ]; then
-  branch_part="  🌿 \033[32m${branch}\033[0m"
-else
-  branch_part=""
+# --- Context window ---
+used_pct=$(echo "$input"   | jq -r '.context_window.used_percentage // empty')
+
+# --- Token counts ---
+total_in=$(echo "$input"   | jq -r '.context_window.total_input_tokens // empty')
+total_out=$(echo "$input"  | jq -r '.context_window.total_output_tokens // empty')
+
+# --- Model ID (for pricing lookup) ---
+model_id=$(echo "$input"   | jq -r '.model.id // empty')
+
+# --- Output style ---
+style=$(echo "$input"      | jq -r '.output_style.name // empty')
+
+# --- Vim mode ---
+vim_mode=$(echo "$input"   | jq -r '.vim.mode // empty')
+
+# --- Agent ---
+agent_name=$(echo "$input" | jq -r '.agent.name // empty')
+agent_type=$(echo "$input" | jq -r '.agent.type // empty')
+
+# --- Worktree ---
+wt_name=$(echo "$input"    | jq -r '.worktree.name // empty')
+wt_branch=$(echo "$input"  | jq -r '.worktree.branch // empty')
+
+# --- Git branch (live, from cwd) ---
+git_branch=""
+if [ -n "$cwd" ]; then
+  git_branch=$(GIT_DIR="$cwd/.git" GIT_WORK_TREE="$cwd" git --git-dir="$cwd/.git" \
+    -c core.hooksPath=/dev/null rev-parse --abbrev-ref HEAD 2>/dev/null)
 fi
 
-# --- Model ---
-model=$(echo "$input" | jq -r '.model.display_name // empty')
-if [ -n "$model" ]; then
-  model_part="✨ \033[38;2;204;120;92m${model}\033[0m"
-else
-  model_part=""
-fi
-
-# --- Context usage: colored progress bar ---
-used_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
+# --- ANSI helpers ---
+bold="\033[1m"
+dim="\033[2m"
 reset="\033[0m"
-if [ -n "$used_pct" ]; then
-  pct_int=$(printf '%.0f' "$used_pct")
-  filled=$(( (pct_int * 10 + 50) / 100 ))
-  [ "$filled" -gt 10 ] && filled=10
-  empty=$(( 10 - filled ))
+cyan="\033[36m"
+yellow="\033[33m"
+green="\033[32m"
+magenta="\033[35m"
+blue="\033[34m"
+red="\033[31m"
+claude_orange="\033[38;2;217;119;87m"
 
-  if [ "$pct_int" -lt 40 ]; then
-    color="\033[32m"   # green
-  elif [ "$pct_int" -lt 65 ]; then
-    color="\033[33m"   # yellow
-  else
-    color="\033[31m"   # red
+sep="${dim}|${reset}"
+
+# ── Line 1: location + git + worktree + agent + vim ──────────────────────────
+line1=""
+
+# Directory
+if [ -n "$cwd" ]; then
+  short_cwd="${cwd/#$HOME/~}"
+  line1+="📁 ${bold}${blue}${short_cwd}${reset}"
+fi
+
+# Git branch
+if [ -n "$git_branch" ] && [ "$git_branch" != "HEAD" ]; then
+  line1+=" ${sep} 🌿 ${green}${git_branch}${reset}"
+fi
+
+# Worktree
+if [ -n "$wt_name" ]; then
+  wt_display="${wt_name}"
+  [ -n "$wt_branch" ] && wt_display+=" (${wt_branch})"
+  line1+=" ${sep} 🌲 ${cyan}${wt_display}${reset}"
+fi
+
+# Agent
+if [ -n "$agent_name" ]; then
+  agent_display="${agent_name}"
+  [ -n "$agent_type" ] && agent_display+=" (${agent_type})"
+  line1+=" ${sep} 🤖 ${cyan}${agent_display}${reset}"
+fi
+
+# Vim mode
+if [ -n "$vim_mode" ]; then
+  vm_color="${green}"
+  [ "$vim_mode" = "NORMAL" ] && vm_color="${yellow}"
+  line1+=" ${sep} ⌨️  ${vm_color}${vim_mode}${reset}"
+fi
+
+# ── Line 2: model + context + tokens + cost + style + session ─────────────────
+line2=""
+
+# Model + version
+if [ -n "$model" ]; then
+  line2+="✨ ${claude_orange}${model}${reset}"
+  [ -n "$version" ] && line2+=" ${dim}v${version}${reset}"
+fi
+
+# Context progress bar
+if [ -n "$used_pct" ]; then
+  used_int=${used_pct%.*}
+
+  bar_color="${green}"
+  if [ -n "$used_int" ] && [ "$used_int" -ge 64 ] 2>/dev/null; then
+    bar_color="${red}"
+  elif [ -n "$used_int" ] && [ "$used_int" -ge 36 ] 2>/dev/null; then
+    bar_color="${yellow}"
   fi
 
-  bar=""
-  for ((i=0; i<filled; i++)); do bar="${bar}▰"; done
-  for ((i=0; i<empty; i++));  do bar="${bar}▱"; done
+  bar_width=10
+  filled=$(awk "BEGIN {f=int(${used_int:-0}*${bar_width}/100); if(f>${bar_width})f=${bar_width}; print f}")
+  empty=$((bar_width - filled))
+  bar_filled=$(printf '%0.s█' $(seq 1 $filled))
+  bar_empty=$(printf '%0.s░' $(seq 1 $empty))
 
-  context_part="  🔋 ${color}${bar} ${pct_int}%${reset}"
-else
-  # No data yet (before first API response): omit the context bar entirely
-  context_part=""
+  line2+=" ${sep} 🔋 ${dim}[${reset}${bar_color}${bar_filled}${reset}${dim}${bar_empty}]${reset}"
+  line2+=" ${bar_color}${used_pct}%${reset}"
 fi
 
-# --- Estimated cost (USD) ---
-# Pricing (per 1M tokens, claude-sonnet-4 tier as baseline):
-#   Input (uncached): $3.00   Output: $15.00
-#   Cache write:      $3.75   Cache read: $0.30
-total_input=$(echo "$input"  | jq -r '.context_window.total_input_tokens  // 0')
-total_output=$(echo "$input" | jq -r '.context_window.total_output_tokens // 0')
-cache_write=$(echo "$input"  | jq -r '.context_window.current_usage.cache_creation_input_tokens // 0')
-cache_read=$(echo "$input"   | jq -r '.context_window.current_usage.cache_read_input_tokens     // 0')
+# Token counts + estimated cost
+if [ -n "$total_in" ] || [ -n "$total_out" ]; then
+  in_k=$(awk "BEGIN {printf \"%.1f\", ${total_in:-0}/1000}")
+  out_k=$(awk "BEGIN {printf \"%.1f\", ${total_out:-0}/1000}")
+  line2+=" ${sep} 🔢 ${dim}in:${in_k}k out:${out_k}k${reset}"
 
-cost=$(awk -v ti="$total_input" -v to="$total_output" \
-           -v cw="$cache_write" -v cr="$cache_read" \
-       'BEGIN {
-         cost = (ti / 1000000 * 3.00) \
-              + (to / 1000000 * 15.00) \
-              + (cw / 1000000 * 3.75) \
-              + (cr / 1000000 * 0.30);
-         printf "%.4f", cost
-       }')
+  case "$model_id" in
+    *claude-opus-4-6*|*claude-opus-4*)
+      price_in="15"; price_out="75" ;;
+    *claude-haiku-4-5*|*claude-haiku-4*)
+      price_in="0.80"; price_out="4" ;;
+    *) # claude-sonnet-4-6 and unknown models
+      price_in="3"; price_out="15" ;;
+  esac
 
-if [ -n "$total_input" ] && [ "$total_input" != "0" ]; then
-  cost_part="  💰 \033[33m\$${cost}\033[0m"
-else
-  cost_part=""
+  est_cost=$(awk "BEGIN {printf \"%.4f\", (${total_in:-0} * ${price_in} + ${total_out:-0} * ${price_out}) / 1000000}")
+  line2+=" ${sep} 💰 ${yellow}~\$${est_cost}${reset}"
 fi
 
-# --- Render two lines ---
-# Line 1: ~/path/to/dir  git branch
-# Line 2: model  context bar  cost
-line1="${dir_part}${branch_part}"
-line2="${model_part}${context_part}${cost_part}"
-
-printf '%b\n' "$line1"
-if [ -n "$line2" ]; then
-  printf '%b\n' "$line2"
-else
-  printf "...\n"
+# Output style
+if [ -n "$style" ] && [ "$style" != "default" ]; then
+  line2+=" ${sep} 🎨 ${yellow}${style}${reset}"
 fi
+
+# Session name
+if [ -n "$session" ]; then
+  line2+=" ${sep} 🏷️  ${dim}${session}${reset}"
+fi
+
+# ── Render ────────────────────────────────────────────────────────────────────
+printf "%b\n%b\n" "$line1" "$line2"
