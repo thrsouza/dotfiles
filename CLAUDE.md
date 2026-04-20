@@ -4,38 +4,40 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Purpose
 
-Personal macOS dotfiles for Thiago Souza. Contains shell, git, terminal, and tool configurations meant to be symlinked into `$HOME`.
+Personal macOS dotfiles for Thiago Souza. Shell, git, terminal, and tool configurations linked or copied into `$HOME`.
 
 ## Setup
 
-Run `./setup.sh` to install all Homebrew packages and Claude Code. It installs: `git`, `gh`, `gpg`, `gpg-agent`, `go`, `openjdk`, `maven`, `uv`, iTerm2, JetBrains Mono fonts, then links OpenJDK into `/Library/Java/JavaVirtualMachines/`.
+Two scripts, in order:
 
-After running setup, manually symlink configs:
-```bash
-ln -sf ~/dev/o2/dotfiles/zshrc ~/.zshrc
-ln -sf ~/dev/o2/dotfiles/gitconfig ~/.gitconfig
-```
+1. `./install.sh` — installs Homebrew packages (`git`, `gh`, `gpg`, `go`, `openjdk`, `maven`, `uv`, `nvm`, `tmux`, `neovim`, `starship`, `zsh-autosuggestions`, `zsh-syntax-highlighting`, iTerm2, JetBrains Mono fonts) and Claude Code, then links OpenJDK into `/Library/Java/JavaVirtualMachines/`.
+2. `./apply.sh` — symlinks `.tmux.conf` and `.config/starship.toml`, copies `.gitconfig` and `.claude/` files into `$HOME`. Safe to re-run.
 
-Copy Claude settings:
+`.zshrc` is linked manually to avoid clobbering an existing one:
 ```bash
-cp claude/settings.json ~/.claude/settings.json
-cp claude/statusline-command.sh ~/.claude/statusline-command.sh
+ln -sf ~/dev/thrsouza/dotfiles/.zshrc ~/.zshrc
 ```
 
 ## Structure
 
-- `zshrc` — Zsh config: GPG agent init, PATH setup for Go and Java, shell aliases
-- `gitconfig` — Git globals: GPG commit signing enabled (`commit.gpgsign = true`), pull fast-forward only, color UI
-- `setup.sh` — Homebrew bootstrap script
-- `claude/settings.json` — Claude Code settings (model: sonnet, custom statusline)
-- `claude/statusline-command.sh` — Custom statusline script showing cwd, git branch, model, context bar, and cost
+- `.zshrc` — Zsh config: GPG agent, Go/Java paths, zsh-autosuggestions + zsh-syntax-highlighting, Starship init, aliases
+- `.gitconfig` — Git globals: GPG commit signing enabled (`commit.gpgsign = true`), pull fast-forward only, color UI
+- `.tmux.conf` — tmux config: prefix `C-a`, vim-style pane bindings, dark minimal status bar
+- `.config/starship.toml` — Starship prompt: dark minimal, two-line, git-aware
+- `install.sh` — Homebrew + Claude Code installer
+- `apply.sh` — Symlinks configs and copies `.gitconfig` / `.claude/` into `$HOME`
+- `.claude/settings.json` — Claude Code settings (model: sonnet, custom statusline)
+- `.claude/statusline-command.sh` — Statusline script showing cwd, git branch, model, context bar, and cost
 - `iterm2/thrsouza.json` — iTerm2 profile (JetBrains Mono, transparency/blur)
 - `gitignore/` — Language-specific `.gitignore` templates
-- `docs/GPG.md` — GPG key generation and Git signing setup guide
+- `docs/GPG.md` — GPG key generation and Git signing setup
 - `docs/iTerm2.md` — iTerm2 profile import guide
 
 ## Key Notes
 
-- All commits must be GPG-signed (`commit.gpgsign = true` in gitconfig). The signing key placeholder is `0000000000000000` — replace with the actual key ID after generating one (see `docs/GPG.md`).
-- The `bora` alias in `zshrc` runs a full Homebrew update/upgrade/cleanup cycle.
-- The Claude statusline script (`claude/statusline-command.sh`) reads JSON from stdin (Claude Code's status event), requires `jq`, and outputs two lines: directory + branch, then model + context bar + estimated cost.
+- `.gitconfig` is **copied** (not symlinked) because the `signingkey` is machine-specific — edit `~/.gitconfig` freely without touching the repo. See `docs/GPG.md`.
+- `.claude/` files are also copied because Claude Code writes to them.
+- `.tmux.conf` and `starship.toml` are **symlinked** so edits in the repo apply immediately.
+- The `bora` alias in `.zshrc` runs a full Homebrew update/upgrade/cleanup cycle.
+- The Claude statusline script reads JSON from stdin, requires `jq`, outputs two lines: directory + branch, then model + context bar + estimated cost.
+- tmux prefix is `C-a` (not the default `C-b`); `|` / `-` split panes, `hjkl` navigate, `C-a r` reloads config.

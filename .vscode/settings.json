@@ -9,5 +9,4 @@
     "terminal.integrated.fontFamily": "Jetbrains Mono",
     "terminal.integrated.fontLigatures.enabled": true,
     "terminal.integrated.fontSize": 15,
-    "workbench.colorTheme": "Tokyo Night",
 }

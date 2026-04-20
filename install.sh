@@ -13,20 +13,37 @@ brew install gh
 brew install gpg
 brew install gpg-agent
 
+# CocoaPods
+brew install cocoapods
+
 # Install GO
 brew install go
 
-# Install OpenJDK
+# Install OpenJDK and Maven
 brew install openjdk
-
-# Install Maven
 brew install maven
 
 # Install UV
 brew install uv
 
+# Install NVM
+brew install nvm
+
 # Install iTerm2
 brew install --cask iterm2
+
+# Install Tmux
+brew install tmux
+
+# Install Neovim
+brew install neovim
+
+# Install Starship prompt
+brew install starship
+
+# Install Zsh plugins
+brew install zsh-autosuggestions
+brew install zsh-syntax-highlighting
 
 # Install Fonts
 brew install --cask font-jetbrains-mono-nerd-font
