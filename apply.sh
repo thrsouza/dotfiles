@@ -22,4 +22,7 @@ mkdir -p "$HOME/.claude"
 cp "$DOTFILES_DIR/.claude/settings.json" "$HOME/.claude/settings.json"
 cp "$DOTFILES_DIR/.claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
 
+# Zsh
+cp "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
+
 echo "Configs applied."
