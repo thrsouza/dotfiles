@@ -35,9 +35,6 @@ brew install --cask iterm2
 # Install Tmux
 brew install tmux
 
-# Install Neovim
-brew install neovim
-
 # Install Starship prompt
 brew install starship
 
