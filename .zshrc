@@ -4,6 +4,17 @@
 # https://github.com/thrsouza/dotfiles
 
 # ------------------------------------------------------------
+# Android Studio
+# ------------------------------------------------------------
+
+if [[ -n "$INTELLIJ_ENVIRONMENT_READER" ]]; then
+  export ANDROID_HOME="$HOME/Library/Android/sdk"
+  export JAVA_HOME="$(/usr/libexec/java_home 2>/dev/null)"
+  export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$JAVA_HOME/bin:$PATH"
+  return
+fi
+
+# ------------------------------------------------------------
 # Tmux
 # ------------------------------------------------------------
 
