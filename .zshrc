@@ -4,23 +4,12 @@
 # https://github.com/thrsouza/dotfiles
 
 # ------------------------------------------------------------
-# Android Studio
-# ------------------------------------------------------------
-
-if [[ -n "$INTELLIJ_ENVIRONMENT_READER" ]]; then
-  export ANDROID_HOME="$HOME/Library/Android/sdk"
-  export JAVA_HOME="$(/usr/libexec/java_home 2>/dev/null)"
-  export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$JAVA_HOME/bin:$PATH"
-  return
-fi
-
-# ------------------------------------------------------------
 # Tmux
 # ------------------------------------------------------------
 
-if [[ -z "$TMUX" ]] && [[ $- == *i* ]] && command -v tmux >/dev/null 2>&1; then
-  exec tmux new -A -s default
-fi
+# if [[ -z "$TMUX" ]] && [[ $- == *i* ]] && command -v tmux >/dev/null 2>&1; then
+#   exec tmux new -A -s default
+# fi
 
 # ------------------------------------------------------------
 # GPG Agent
@@ -33,9 +22,6 @@ gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 # Paths
 # ------------------------------------------------------------
 
-# Claude Code
-export PATH="$HOME/.local/bin:$PATH"
-
 # Go
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"
@@ -45,8 +31,9 @@ export JAVA_HOME=$(/usr/libexec/java_home) # export JAVA_HOME=$(/usr/libexec/jav
 export PATH=$JAVA_HOME/bin:$PATH
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 
-# Homebrew
-export HOMEBREW_NO_INSTALL_CLEANUP=1
+# Android
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$JAVA_HOME/bin:$PATH"
 
 # Antigravity
 export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
@@ -87,6 +74,6 @@ command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
 
 alias ll='ls -alF'
 
-alias claudey='claude --dangerously-skip-permissions'
+alias codexy='codex --yolo'
 
 alias bora="brew update; brew upgrade; brew upgrade --cask; brew cleanup --prune=all"

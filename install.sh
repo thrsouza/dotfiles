@@ -33,7 +33,7 @@ brew install nvm
 brew install --cask iterm2
 
 # Install Tmux
-brew install tmux
+# brew install tmux
 
 # Install Starship prompt
 brew install starship
@@ -46,6 +46,9 @@ brew install zsh-syntax-highlighting
 brew install --cask font-jetbrains-mono-nerd-font
 brew install --cask font-jetbrains-mono
 
+# Codex
+brew install codex
+
 # Update and clean up Homebrew
 brew update;
 brew upgrade;
@@ -53,7 +56,7 @@ brew upgrade --cask;
 brew cleanup --prune=all
 
 # Install Claude Code
-curl -fsSL https://claude.ai/install.sh | bash
+# curl -fsSL https://claude.ai/install.sh | bash
 
 # Link OpenJDK to the correct location
 sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
