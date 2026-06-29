@@ -25,19 +25,6 @@ gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 # Go
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"
-
-# Java
-export JAVA_HOME=$(/usr/libexec/java_home) # export JAVA_HOME=$(/usr/libexec/java_home -v XX)
-export PATH=$JAVA_HOME/bin:$PATH
-export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
-
-# Android
-export ANDROID_HOME="$HOME/Library/Android/sdk"
-export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$JAVA_HOME/bin:$PATH"
-
-# Antigravity
-export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
-
 # NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
@@ -74,6 +61,10 @@ command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
 
 alias ll='ls -alF'
 
-alias codexy='codex --yolo'
-
 alias bora="brew update; brew upgrade; brew upgrade --cask; brew cleanup --prune=all"
+
+# ------------------------------------------------------------
+# SDKMAN
+# ------------------------------------------------------------
+
+source "$HOME/.sdkman/bin/sdkman-init.sh"

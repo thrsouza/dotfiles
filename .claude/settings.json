@@ -1,12 +1,12 @@
 {
   "statusLine": {
     "type": "command",
-    "command": "bash /Users/thrsouza/.claude/statusline-command.sh"
+    "command": "~/.claude/statusline.sh",
+    "padding": 0
   },
-  "permissions": {
-    "allow": [
-      "mcp__*",
-      "Bash(*)"
-    ]
+  "tui": "fullscreen",
+  "theme": "dark",
+  "enabledPlugins": {
+    "skill-creator@claude-plugins-official": true
   }
 }
